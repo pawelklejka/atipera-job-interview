@@ -9,7 +9,6 @@ public class CustomErrorDecoder implements ErrorDecoder {
     public Exception decode(String s, Response response) {
 
         if(HttpStatus.NOT_FOUND.value() == response.status()) return new GithubRepoException(GithubRepoError.USER_NOT_FOUND);
-
-        return null;
+        else return new Exception("Something went wrong.");
     }
 }

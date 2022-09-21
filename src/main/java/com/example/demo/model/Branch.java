@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public record Branch(String name,
-                     String lastCommitSha) {
+                     Commit commit) {
 
+    public record Commit(String sha){
+
+    }
 }

@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import com.example.demo.dto.BranchDTO;
 import com.example.demo.dto.GithubRepoDTO;
 import com.example.demo.model.Branch;
 import com.example.demo.model.GithubRepo;
@@ -13,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,11 +26,11 @@ class DemoApplicationTests {
 
     @Test
     public void createGithubRepo(){
-        GithubRepo githubRepo = new GithubRepo("repoName","ownerName", List.of(new BranchDTO("repoBranch", new BranchDTO.Commit("5ha5as5"))));
+        GithubRepo githubRepo = new GithubRepo("repoName","ownerName", List.of(new Branch("repoBranch", new Branch.Commit("5ha5as5"))));
 
         String repoName = "repoName";
         String ownerName = "ownerName";
-        List<BranchDTO> branchDTOS = List.of(new BranchDTO("repoBranch", new BranchDTO.Commit("5ha5as5")));
+        List<Branch> branchDTOS = List.of(new Branch("repoBranch", new Branch.Commit("5ha5as5")));
 
         Assertions.assertEquals(repoName, githubRepo.name());
         Assertions.assertEquals(ownerName, githubRepo.ownerName());
@@ -56,11 +54,11 @@ class DemoApplicationTests {
     @Test
     public void testGithubServiceFindAll(){
         List<GithubRepoDTO> repos = List.of(new GithubRepoDTO(false,"username/repo", "somelink"));
-        List<BranchDTO> branchDTOS = List.of(new BranchDTO("branch", new BranchDTO.Commit("5ha5as5")));
+        List<Branch> branchDTOS = List.of(new Branch("branch", new Branch.Commit("5ha5as5")));
 
         Optional<List<GithubRepo>> githubRepos = Optional
                 .of(List.of(new GithubRepo("repo","username",
-                        List.of(new BranchDTO("branch", new BranchDTO.Commit("5ha5as5"))))));
+                        List.of(new Branch("branch", new Branch.Commit("5ha5as5"))))));
 
 
 
@@ -71,8 +69,6 @@ class DemoApplicationTests {
         Mockito.when(githubClient.getBranches("username", "repo"))
                         .thenReturn(branchDTOS);
 
-//        Mockito.when(githubService.findAll("ownerName"))
-//                .thenReturn(githubRepos);
 
         Optional<List<GithubRepo>> testRepo = githubService.findAll("username");
 

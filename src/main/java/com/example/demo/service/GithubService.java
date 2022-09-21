@@ -1,8 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.BranchDTO;
-import com.example.demo.exception.GithubRepoError;
-import com.example.demo.exception.GithubRepoException;
 import com.example.demo.model.Branch;
 import com.example.demo.model.GithubRepo;
 import org.springframework.stereotype.Service;
@@ -22,11 +19,11 @@ public class GithubService {
     public Optional<List<GithubRepo>> findAll(String userName){
 
         List<GithubRepo> githubRepos = githubClient.getGithubRepos(userName).stream()
-                .filter(r -> r.fork() == false)
+                .filter(r -> !r.fork())
                 .map(r -> {
                     //we get full name in a form of "username/repo"
                     String[] ownerAndReponame = r.name().split("/");
-                    List<BranchDTO> branches  = githubClient.getBranches(ownerAndReponame[0], ownerAndReponame[1]);
+                    List<Branch> branches  = githubClient.getBranches(ownerAndReponame[0], ownerAndReponame[1]);
 
                     return new GithubRepo(ownerAndReponame[1], ownerAndReponame[0], branches);
                 })
